@@ -23,34 +23,19 @@ namespace PensionsCalculator.Services
                 return CalculateRetiredPension(lastFiveYearAverageSalary, workedMonths);
             }
         }
-        
+
+        #region Helper methods
+
         private decimal? CalculateRetiredPension(decimal lastFiveYearAverageSalary, int workedMonths)
         {
-            try
-            {try
-                {
-                    decimal multiplicationFactor = GetRetiredPensionMultiplicationFactor();
-                    return lastFiveYearAverageSalary * workedMonths * multiplicationFactor;
-                }
-                catch { throw; }
-            }
-            catch
-            {
-                return lastFiveYearAverageSalary * workedMonths / 12 * 1 / 45;
-            }
+            decimal multiplicationFactor = GetRetiredPensionMultiplicationFactor();
+            return lastFiveYearAverageSalary * workedMonths * multiplicationFactor;
         }
         
         private decimal? CalculateDeceasedPension(decimal lastFiveYearAverageSalary)
         {
-            try
-            {
-                decimal multiplicationFactor = GetDeceasedPensionMultiplicationFactor();
-                return lastFiveYearAverageSalary * multiplicationFactor;
-            }
-            catch
-            {
-                return lastFiveYearAverageSalary * 0.65m;
-            }
+            decimal multiplicationFactor = GetDeceasedPensionMultiplicationFactor();
+            return lastFiveYearAverageSalary * multiplicationFactor;
         }
 
         private decimal GetRetiredPensionMultiplicationFactor()
@@ -64,5 +49,7 @@ namespace PensionsCalculator.Services
             var deceasedPensions = _pensionCSVHelper.ReadDeceasedPensions();
             return deceasedPensions.Average(p => p.Pension / p.Average);
         }
+
+        #endregion
     }
 }

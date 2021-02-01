@@ -34,6 +34,12 @@ namespace PensionsCalculator.Controllers
             return View();
         }
         
+        [HttpGet]
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Pension(EmployeePaymentViewModel employeePayment)
         {
